@@ -1,51 +1,59 @@
 import numpy as np
+import math as m
 from conversion_letras import *
-
 
 archivo = open("frase.txt","r")
 contenido = archivo.read()                  #Lectura del archivo
 contenido = contenido.upper()               #Convierte su contenido a mayusculas
 print contenido                     
-letra_numero(contenido)                     #Funcion para pasar a numeros (arreglar numeros del 00-09)
+mensaje = letra_numero(contenido)           #Funcion para pasar a numeros (arreglar numeros del 00-09)
+print mensaje
+largo =len(contenido)
+largo= int(m.ceil(largo/3))
 
-llave = np.array([[1, 0, 0],
+llave = np.array([[0, 0, 0],
                   [0, 0, 0],
                   [0, 0, 0]])               #Creacion matriz de la llave
 
-
+encript = np.zeros((3,largo))              #Creacion matriz de la llave
 i=0
 j=0
-contador = 0
-                                            #Ciclo para rellenar matriz
-while contador < 9:
-    if(contador<3):
-        a = int(raw_input("Ingrese numero de la columna "+str(i+1)+" fila " + str(j+1) + " ")) 
-        llave[j,i] = a
-        i +=1
-        if(contador==2):
-            j=1
-            i=0
-            print ' '
-        
-    if(contador>=3 and contador<6):
-        b = int(raw_input("Ingrese numero de la columna "+str(i+1)+" fila " + str(j+1) + " ")) 
-        llave[j,i] = b
-        i +=1
-        if(contador==5):
-            j=2
-            i=-1
-            print ' '
-        
-    if(contador>=6 and contador<9):        
-        c = int(raw_input("Ingrese numero de la columna "+str(i+2)+" fila " + str(j+1) + " ")) 
-        i +=1
-        llave[j,i] = c
+contador = 1
+for m in range(1, 10):
+    a = int(raw_input("Ingrese numero de la columna "+str(i+1)+" fila " + str(j+1) + " ")) 
+    llave[j,i] = a
+    i +=1
+    if (contador % 3 == 0):
+        i=0
+        j+=1
+        print " "
+    contador +=1
 
-    contador += 1
 print ' '
 print "Su llave queda asi "
 print llave
-
 det = round(np.linalg.det(llave))
 print "El determinante es "+ str(det)
+if(det ==0):
+    print "La matriz que ingreso no es invertible por lo que no se puede encriptar"
+
+f=0
+g=0
+cont = 1 
+for letra in mensaje:
+    encript[f,g] = letra
+    f +=1
+    if (cont % 3==0):
+        f = 0
+        g +=1
+    cont +=1
+    
+
+print encript
+    
+respuesta = llave.dot(encript)
+print "la respuesta es"
+print respuesta
+
+
 
