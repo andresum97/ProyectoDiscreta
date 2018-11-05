@@ -8,6 +8,23 @@ def letra_numero(palabra):
     numero = ""
     letra = ""
     temp = 0
+    for i in range(0,total):
+        letra = palabra[i]
+        temp = diccionario.find(letra)
+        numero = numero + str(temp)
+    return numero
+        
+        
+"""
+diccionario = " ABCDEFGHIJKLMNOPQRSTUVWXYZ!?"
+
+def letra_numero(palabra):
+    palabra = palabra.upper()
+    total = len(palabra)
+    i = 0
+    numero = ""
+    letra = ""
+    temp = 0
     numl = ""
     for i in range(0,total):
         letra = palabra[i]
@@ -20,5 +37,4 @@ def letra_numero(palabra):
         numero = numero + numl
     print numero
         
-        
-        
+"""
