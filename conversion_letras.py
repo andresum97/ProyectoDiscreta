@@ -59,3 +59,14 @@ def modulo_29(matriz,largo):
             matriz[i][j] = valor29
     return matriz
 
+def numero_letra(matriz,largo):
+    valor = 0
+    palabra = ""
+    letra = ""
+    for j in range(0,largo):
+        for i in range(0,3):
+            valor = matriz[i][j]
+            letra = diccionario[valor]
+            palabra += letra
+    return palabra
+            
