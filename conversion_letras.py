@@ -8,10 +8,16 @@ def letra_numero(palabra):
     numero = ""
     letra = ""
     temp = 0
+    numl = ""
     for i in range(0,total):
         letra = palabra[i]
         temp = diccionario.find(letra)
-        numero = numero + str(temp)
+        #numl = str(temp)
+        if((temp>=0)and(temp<=9)):
+            numl = "0"+str(temp)
+        else:
+            numl = str(temp)
+        numero = numero + numl
     print numero
         
         
