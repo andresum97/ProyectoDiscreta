@@ -17,12 +17,14 @@ from conversion_letras import *             #Modulo con metodos para encripcion 
 archivo = open("frase.txt","r")             #Para poder leer la frase u oracion en el archivo de texto
 contenido = archivo.read()                  
 contenido = contenido.upper()               #Convierte su contenido a mayusculas
+print "El mensaje en el archivo de texto es: "
 print contenido                             #Muestra la oracion
 largo =len(contenido)                       #Largo de oracion a encriptar/desencriptar
 largo1= int(math.ceil(largo/3.0))           #Variable en la que se guarda el largo de la matriz
 
 opcion = 0
 while(opcion != 3):                         #Menu de opciones, para encriptar, desencriptar o salir del programa
+    print "Elija la opcion que desee"
     print ("1. Encriptar")
     print ("2. Desencriptar")
     print ("3. Salir")
@@ -111,50 +113,54 @@ while(opcion != 3):                         #Menu de opciones, para encriptar, d
         print "Su llave queda asi: "
         print llaveD
         print "-------------------------------------------------------------------------------"
-        llaveD = inversematrix(llaveD)   #Se le saca la matriz inversa con modulo 29 a la matriz llave
-        print "Su llave invertida mod 29 queda asi: "
-        print llaveD
-        print "-------------------------------------------------------------------------------"
+        det = round(np.linalg.det(llaveD))                                                       #Aproximacion de determinante a entero
+        print "El determinante es "+ str(det)
+        if(det ==0):                                                                            #Verificicion del determinante, para saber
+            print "La matriz que ingreso no es invertible por lo que no se puede desencriptar"     #si la matriz llave posee inverso
+            print "-------------------------------------------------------------------------------"
+            
+        else:
+            print "Se puede invertir"
+            print "-------------------------------------------------------------------------------"
+            llaveD = inversematrix(llaveD)   #Se le saca la matriz inversa con modulo 29 a la matriz llave
+            print "Su llave invertida mod 29 queda asi: "
+            print llaveD
+            print "-------------------------------------------------------------------------------"
 
-        desencript = np.zeros((3,largo1))              #Creacion matriz de la llave
-        diccionario = " ABCDEFGHIJKLMNOPQRSTUVWXYZ!?"  #Constante de diccionario
-        total = len(contenido)                         #Mismo procedimiento de convertir a numeros la oracion
-        i = 0
-        numero = ""
-        letra = ""
-        temp = 0
-        f=0
-        g=0
-        cont =  1
-        for i in range(0,total):
-            letra = contenido[i]
-            temp = diccionario.find(letra)
-            numero = numero + str(temp)
-            desencript[f,g] = temp
-            f +=1
-            if (cont % 3==0):
-                f = 0
-                g +=1
-            cont +=1
-        print "-------------------------------------------------------------------------------"
-        print "El mensaje encriptado en Matriz es: "
-        print desencript                         #Muestra matriz de desencripcion
-        print "-------------------------------------------------------------------------------"
-        mensaje = llaveD.dot(desencript)         #Realiza la multiplicacion producto cruz entre la llave inversa y matriz de desencriptado
-        print "La multiplicacion de las matrices es: "
-        print mensaje
-        print "-------------------------------------------------------------------------------"
-        mensaje = modulo_29(mensaje,largo1)     #Saca modulo 29 a matriz resultante
-        mensaje = numero_letra(mensaje,largo1)  #Conversion de los valores de la matriz a letras
-        print "Final essss: "
-        print mensaje                           #Impresion de mensaje final
-        print "-------------------------------------------------------------------------------"
+            desencript = np.zeros((3,largo1))              #Creacion matriz de la llave
+            diccionario = " ABCDEFGHIJKLMNOPQRSTUVWXYZ!?"  #Constante de diccionario
+            total = len(contenido)                         #Mismo procedimiento de convertir a numeros la oracion
+            i = 0
+            numero = ""
+            letra = ""
+            temp = 0
+            f=0
+            g=0
+            cont =  1
+            for i in range(0,total):
+                letra = contenido[i]
+                temp = diccionario.find(letra)
+                numero = numero + str(temp)
+                desencript[f,g] = temp
+                f +=1
+                if (cont % 3==0):
+                    f = 0
+                    g +=1
+                cont +=1
+            print "-------------------------------------------------------------------------------"
+            print "El mensaje encriptado en Matriz es: "
+            print desencript                         #Muestra matriz de desencripcion
+            print "-------------------------------------------------------------------------------"
+            mensaje = llaveD.dot(desencript)         #Realiza la multiplicacion producto cruz entre la llave inversa y matriz de desencriptado
+            print "La multiplicacion de las matrices es: "
+            print mensaje
+            print "-------------------------------------------------------------------------------"
+            mensaje = modulo_29(mensaje,largo1)     #Saca modulo 29 a matriz resultante
+            mensaje = numero_letra(mensaje,largo1)  #Conversion de los valores de la matriz a letras
+            print "Mensaje Final: "
+            print mensaje                           #Impresion de mensaje final
+            print "-------------------------------------------------------------------------------"
 
-        
-        
-        
+
     if (opcion == 3):                        #Opcion 3: Finalizacion de programa
         print "!CLXEE (Adios Encriptado :v)"
-
-
-
