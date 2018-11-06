@@ -80,6 +80,66 @@ while(opcion != 3):
         
     if (opcion == 2):
         print "Desencriptar"
+        llaveD = np.array([[0, 0, 0],
+                          [0, 0, 0],
+                          [0, 0, 0]])               #Creacion matriz de la llave
+        i=0
+        j=0
+        contador = 1
+        for m in range(1, 10):
+            a = int(raw_input("Ingrese numero de la columna "+str(i+1)+" fila " + str(j+1) + " ")) 
+            llaveD[j,i] = a
+            i +=1
+            if (contador % 3 == 0):
+                i=0
+                j+=1
+                print " "
+            contador +=1
+        print "-------------------------------------------------------------------------------"
+        print "Su llave queda asi: "
+        print llaveD
+        print "-------------------------------------------------------------------------------"
+        llaveD = inversematrix(llaveD)
+        print "Su llave invertida mod 29 queda asi: "
+        print llaveD
+        print "-------------------------------------------------------------------------------"
+
+        desencript = np.zeros((3,largo1))              #Creacion matriz de la llave
+        diccionario = " ABCDEFGHIJKLMNOPQRSTUVWXYZ!?"
+        total = len(contenido)
+        i = 0
+        numero = ""
+        letra = ""
+        temp = 0
+        f=0
+        g=0
+        cont =  1
+        for i in range(0,total):
+            letra = contenido[i]
+            temp = diccionario.find(letra)
+            numero = numero + str(temp)
+            desencript[f,g] = temp
+            f +=1
+            if (cont % 3==0):
+                f = 0
+                g +=1
+            cont +=1
+        print "-------------------------------------------------------------------------------"
+        print "El mensaje encriptado en Matriz es: "
+        print desencript
+        print "-------------------------------------------------------------------------------"
+        mensaje = llaveD.dot(desencript)
+        print "La multiplicacion de las matrices es: "
+        print mensaje
+        print "-------------------------------------------------------------------------------"
+        mensaje = modulo_29(mensaje,largo1)
+        mensaje = numero_letra(mensaje,largo1)
+        print "Final essss: "
+        print mensaje
+        print "-------------------------------------------------------------------------------"
+
+        
+        
         
     if (opcion == 3):
         print "!CLXEE (Adios Encriptado :v)"
