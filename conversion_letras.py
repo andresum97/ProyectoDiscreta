@@ -38,15 +38,6 @@ def letra_numero(palabra):
         numero = numl
         resultado.append(numero)
     return resultado
-    #largo = len(palabra)
-    #largo = int(m.ceil(largo/3))
-    #np.zeros((3,largo))
-    #c = np.asarray(resultado)
-    #print c
-    #for i in range(0,len(resultado)):
-     #   print resultado[i]
-        #numero = numero + numl
-    #print numero
 
 
 def modulo_29(matriz,largo):
@@ -54,19 +45,20 @@ def modulo_29(matriz,largo):
     valor29 = 0
     for j in range(0,largo):
         for i in range(0,3):
-            numero = matriz[i][j]
+            numero = matriz[i,j]
             valor29 = numero % 29
-            matriz[i][j] = valor29
+            matriz[i,j] = valor29
     return matriz
 
-def numero_letra(matriz,largo):
+def numero_letra(matriz,l):
     valor = 0
     palabra = ""
     letra = ""
+    largo = int(l)
     for j in range(0,largo):
         for i in range(0,3):
-            valor = matriz[i][j]
-            letra = diccionario[valor]
+            valor = matriz[i,j]
+            letra = diccionario[int(valor)]
             palabra += letra
     return palabra
 
@@ -112,4 +104,3 @@ def inversematrix(matrix):
                 A[j] = (A[j] - factor * A[i]) % q
                 Ainv[j] = (Ainv[j] - factor * Ainv[i]) % q
     return Ainv
-            
